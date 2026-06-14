@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFF8F0;
+  --fg: #2D2016;
+  --accent: #E8833A;
+  --card: #FFFFFF;
+  --muted: #8B7355;
+  --surface: #FFE8D6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+.carousel { width: 1080px; }
+.slide {
+  width: 1080px;
+  height: 1440px;
+  position: relative;
+  overflow: hidden;
+}
+.content {
+  position: absolute;
+  top: 120px; left: 60px; right: 60px; bottom: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Cover ── */
+.cover { background: var(--bg); display: flex; align-items: center; justify-content: center; text-align: center; }
+.cover-accent-block {
+  position: absolute; top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: var(--accent); border-radius: 50%; opacity: 0.12;
+}
+.cover-line {
+  position: absolute; bottom: 300px; left: -40px;
+  width: 200px; height: 6px;
+  background: var(--accent); opacity: 0.3; border-radius: 3px;
+}
+.cover-dots {
+  position: absolute; top: 200px; right: 100px;
+  width: 120px; height: 120px;
+  background-image: radial-gradient(circle, var(--accent) 3px, transparent 3px);
+  background-size: 20px 20px;
+  opacity: 0.12;
+}
+.cover-number {
+  font-size: 180px; font-weight: 900; color: var(--accent);
+  line-height: 0.85; margin-bottom: -10px;
+}
+.cover-title {
+  font-size: 80px; font-weight: 800; color: var(--fg);
+  line-height: 1.1;
+}
+.cover-subtitle {
+  font-size: 36px; font-weight: 400; color: var(--muted);
+  margin-top: 20px;
+}
+.swipe-hint {
+  position: absolute; bottom: 80px; right: 60px;
+  display: flex; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 18px;
+}
+.swipe-hint i { font-size: 24px; color: var(--accent); }
+
+/* ── Tip Page ── */
+.tip-page { background: var(--bg); }
+.page-header { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; }
+.tip-number { font-size: 72px; font-weight: 900; color: var(--accent); line-height: 1; }
+.page-title { font-size: 48px; font-weight: 700; color: var(--fg); }
+.tip-card {
+  background: var(--card); border-radius: 20px;
+  padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  flex: 1;
+}
+.tip-icon { font-size: 48px; color: var(--accent); margin-bottom: 20px; }
+.tip-body { font-size: 30px; color: var(--fg); line-height: 1.8; }
+.tip-highlight {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 28px; padding: 16px 24px;
+  background: var(--surface); border-radius: 12px;
+}
+.highlight-label { font-size: 20px; font-weight: 700; color: var(--accent); }
+.highlight-text { font-size: 24px; color: var(--fg); }
+.page-indicator {
+  position: absolute; bottom: 60px; right: 60px;
+  font-size: 18px; color: var(--muted);
+}
+.page-indicator .current { color: var(--accent); font-weight: 700; }
+
+/* ── Swipe Forward ── */
+.swipe-forward {
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: 8px; margin-top: auto; padding-top: 20px;
+  font-size: 22px; color: var(--accent); font-weight: 500;
+}
+.swipe-forward i { font-size: 26px; }
+
+/* ── Summary Page ── */
+.summary-page { background: var(--bg); text-align: center; }
+.summary-badge {
+  display: inline-block; padding: 8px 28px;
+  background: var(--accent); color: white;
+  border-radius: 20px; font-size: 22px; font-weight: 700;
+  margin-bottom: 24px;
+}
+.summary-title { font-size: 56px; font-weight: 800; color: var(--fg); margin-bottom: 20px; }
+.summary-body { font-size: 28px; color: var(--muted); line-height: 1.6; margin-bottom: 40px; }
+.cta-box {
+  background: var(--card); border-radius: 20px;
+  padding: 32px; text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.cta-icon { font-size: 40px; color: var(--accent); margin-bottom: 12px; }
+.cta-text { font-size: 28px; color: var(--fg); font-weight: 600; margin-bottom: 8px; }
+.cta-sub { font-size: 22px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="carousel">
+
+  <!-- Slide 0: Cover -->
+  <div class="slide cover">
+    <div class="cover-accent-block"></div>
+    <div class="cover-line"></div>
+    <div class="cover-dots"></div>
+    <div class="content" style="justify-content: center; align-items: center;">
+      <div class="cover-number">5</div>
+      <div class="cover-title">个睡眠秘诀</div>
+      <div class="cover-subtitle">让你每天精神百倍</div>
+    </div>
+    <div class="swipe-hint">
+      <i class="ri-arrow-right-s-line"></i>
+      <span>左滑查看</span>
+    </div>
+  </div>
+
+  <!-- Slide 1: Intro -->
+  <div class="slide tip-page">
+    <div class="content">
+      <div class="page-header">
+        <span class="tip-number">?</span>
+        <h2 class="page-title">为什么睡不好？</h2>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon"><i class="ri-moon-foggy-line"></i></div>
+        <p class="tip-body">80%的睡眠问题来自日常坏习惯。睡前刷手机、晚餐吃太饱、卧室温度太高......这些看似小事，却在偷偷破坏你的睡眠质量。</p>
+      </div>
+      <div class="tip-highlight">
+        <span class="highlight-label">关键</span>
+        <span class="highlight-text">了解原因是改变的第一步</span>
+      </div>
+      <div class="swipe-forward">
+        <span>第1个秘诀就够颠覆了</span>
+        <i class="ri-arrow-right-s-line"></i>
+      </div>
+    </div>
+    <div class="page-indicator"><span class="current">2</span>/<span class="total">6</span></div>
+  </div>
+
+  <!-- Slide 2: Tip 1 -->
+  <div class="slide tip-page">
+    <div class="content">
+      <div class="page-header">
+        <span class="tip-number">01</span>
+        <h2 class="page-title">固定作息时间</h2>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon"><i class="ri-time-line"></i></div>
+        <p class="tip-body">每天同一时间入睡和起床，即使周末也不例外。你的生物钟会感谢你。</p>
+      </div>
+      <div class="tip-highlight">
+        <span class="highlight-label">关键</span>
+        <span class="highlight-text">坚持21天养成习惯</span>
+      </div>
+      <div class="swipe-forward">
+        <span>第2个秘诀更反直觉</span>
+        <i class="ri-arrow-right-s-line"></i>
+      </div>
+    </div>
+    <div class="page-indicator"><span class="current">3</span>/<span class="total">6</span></div>
+  </div>
+
+  <!-- Slide 3: Tip 2 (MID-ESCALATION HOOK - COUNTER) -->
+  <div class="slide tip-page">
+    <div class="content">
+      <div class="page-header">
+        <span class="tip-number">02</span>
+        <h2 class="page-title">睡前远离手机</h2>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon"><i class="ri-smartphone-line"></i></div>
+        <p class="tip-body">睡前1小时把手机放到卧室外面。蓝光会抑制褪黑素分泌，让你越刷越清醒。</p>
+      </div>
+      <div class="tip-highlight">
+        <span class="highlight-label">替代</span>
+        <span class="highlight-text">用纸质书代替手机</span>
+      </div>
+      <div class="swipe-forward">
+        <span>解决了入睡——但深度睡眠呢？</span>
+        <i class="ri-arrow-right-s-line"></i>
+      </div>
+    </div>
+    <div class="page-indicator"><span class="current">4</span>/<span class="total">6</span></div>
+  </div>
+
+  <!-- Slide 4: Tip 3 -->
+  <div class="slide tip-page">
+    <div class="content">
+      <div class="page-header">
+        <span class="tip-number">03</span>
+        <h2 class="page-title">卧室温度18-22度</h2>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon"><i class="ri-temp-cold-line"></i></div>
+        <p class="tip-body">凉爽的环境有助于核心体温下降，这是入睡的关键信号。夏天也别把空调开太低。</p>
+      </div>
+      <div class="tip-highlight">
+        <span class="highlight-label">最佳</span>
+        <span class="highlight-text">20度是黄金温度</span>
+      </div>
+      <div class="swipe-forward">
+        <span>最后一个秘诀才是终极武器</span>
+        <i class="ri-arrow-right-s-line"></i>
+      </div>
+    </div>
+    <div class="page-indicator"><span class="current">5</span>/<span class="total">6</span></div>
+  </div>
+
+  <!-- Slide 5: Summary (CLOSING HOOK - PROMISE) -->
+  <div class="slide summary-page">
+    <div class="content" style="justify-content: center; align-items: center;">
+      <div class="summary-badge">总结</div>
+      <div class="summary-title">今晚就开始试试</div>
+      <p class="summary-body">从这3个秘诀中选一个开始，坚持21天，你会发现睡眠质量的改变。</p>
+      <div class="cta-box">
+        <div class="cta-icon"><i class="ri-heart-3-line"></i></div>
+        <p class="cta-text">觉得有用就收藏起来吧~</p>
+        <p class="cta-sub">关注我，每天分享实用小技巧</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

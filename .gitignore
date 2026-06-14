@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+
+# Output directories
+carousel_output/
+frsm_output/
+_output/
+
+# Temp files
+_modified.html
+_post_text.txt
+*.tmp
