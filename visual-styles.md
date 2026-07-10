@@ -102,6 +102,53 @@ Named visual identities for social media carousel content.
 
 ---
 
+## Style 8: Handwriting Paper（手写信笺）
+
+Inspired by [纸笺工坊](https://handwriting.md2card.com/zh) — a handwriting-style card generator with paper textures, handwriting fonts, and sticker decorations.
+
+| Property | Value |
+|---|---|
+| Background | Paper textures — kraft `#F5E6C8`, notebook `#F0EDE4`, grid `#F8F8F6`, rice paper `#FFF8E7` |
+| Text | `#3D2B1F` (ink black-brown) |
+| Accent | `#C0392B` (stamp red) or `#2C3E50` (ink blue) |
+| Cards | None — content floats on paper, no card containers |
+| Muted | `#8B7D6B` (faded ink) |
+| Font | Handwriting fonts: `"Ma Shan Zheng"`, `"ZCOOL KuaiLe"`, `"ZCOOL XiaoWei"`, `"Liu Jian Mao Cao"`, `"Long Cang"` |
+| Decorative | Tape strips, paper clips, sticky notes, stamps, hand-drawn underlines, washi tape, coffee stains |
+| Texture | CSS paper grain: `background-image` with noise SVG, grid lines, or kraft flecks |
+| Best for | Reading notes, journal entries, quotes, book excerpts, study cards, warm personal content |
+
+### Font Loading
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=ZCOOL+XiaoWei&family=Liu+Jian+Mao+Cao&family=Long+Cang&display=swap" rel="stylesheet">
+```
+
+### Paper Texture CSS
+
+```css
+/* Kraft paper */
+.kraft-bg {
+  background-color: #F5E6C8;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Notebook ruled */
+.notebook-bg {
+  background-color: #F0EDE4;
+  background-image: repeating-linear-gradient(transparent, transparent 39px, #D4C9A8 39px, #D4C9A8 40px);
+}
+
+/* Grid paper */
+.grid-bg {
+  background-color: #F8F8F6;
+  background-image:
+    linear-gradient(rgba(180,180,180,0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,180,180,0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+```
+
 ## Style Selection Matrix
 
 | Content Type | Recommended Style |
@@ -121,3 +168,7 @@ Named visual identities for social media carousel content.
 | Gardening / eco / organic | Nature Fresh |
 | Quotes / poetry / editorial | Minimal Mono |
 | Typography-focused / artsy | Minimal Mono |
+| Reading notes / journal / excerpts | Handwriting Paper |
+| Book notes / study cards | Handwriting Paper |
+| Warm personal content / diary | Handwriting Paper |
+| Quotes / poetry (organic feel) | Handwriting Paper |

@@ -31,10 +31,11 @@ User provides text content (story/blog/tips/knowledge)
   Phase 2: Generate HTML Carousel
      Mode A (default): AI generates ONE responsive HTML that works at both sizes
        Portrait (1080x1440) + Landscape (1024x436) -- same HTML, two render passes
-     Mode B: User provides images -> AI adds text overlay -> composite
-        |
-        v
-  Phase 3: HTML -> Images (dual-size output by default)
+      Mode B (optional): User provides images -> AI adds text overlay -> composite
+      Mode C (optional): Handwriting Paper — paper texture + handwriting fonts + sticker decorations
+         |
+         v
+   Phase 3: HTML -> Images (dual-size by default; Mode C: single-size portrait only)
      Run 1: Portrait screenshots (1080x1440) -> carousel_001.png, ...
      Run 2: Same HTML at 1024x436 -> cover_1024x436_001.png, ...
      Both runs output ALL pages
@@ -54,7 +55,7 @@ Before writing ANY HTML, you MUST have a visual identity defined.
 
 Check in this order:
 
-1. **User specified a style?** -> Read [visual-styles.md](visual-styles.md) for named styles (Warm Lifestyle, Clean Knowledge, Bold Social, Dark Aesthetic, etc.).
+1. **User specified a style?** -> Read [visual-styles.md](visual-styles.md) for named styles (Warm Lifestyle, Clean Knowledge, Bold Social, Dark Aesthetic, Handwriting Paper, etc.).
 2. **Content naturally fits a style?** -> Use the Style Selection Matrix in [visual-styles.md](visual-styles.md) to pick the best match.
 3. **None of the above?** -> Ask the user:
    - What's the mood? (lifestyle / knowledge / emotional / dramatic / cute)
@@ -741,6 +742,121 @@ This mode uses the script directly:
 ```bash
 python scripts/html2carousel.py --images-dir ./my_photos/ --overlay-text _carousel_design.json -o output/
 ```
+
+### Mode C: Handwriting Paper Cards
+
+**Trigger:** User says "手写风格", "手写卡片", "手账", "手写信笺", "handwriting style", "paper texture", "journal style", "纸笺", "读书笔记", "手写", or the content is notes, quotes, journal, book excerpts.
+
+Inspired by [纸笺工坊](https://handwriting.md2card.com/zh) — generates handwriting-style cards with paper texture backgrounds, handwriting fonts, and sticker decorations.
+
+#### Style Reference
+
+See [visual-styles.md](visual-styles.md) → Style 8: Handwriting Paper for full palette, fonts, and texture CSS.
+
+#### Design Rules
+
+<HARD-GATE>
+Handwriting Mode rules — MUST follow ALL:
+
+1. **Paper background** — Use one of the paper textures (kraft, notebook ruled, grid, rice paper). Never use solid flat colors.
+2. **Handwriting fonts only** — `"Ma Shan Zheng"`, `"ZCOOL KuaiLe"`, `"ZCOOL XiaoWei"`, `"Liu Jian Mao Cao"`, `"Long Cang"`. No sans-serif or serif fonts.
+3. **No card containers** — Text floats directly on paper. No white card backgrounds, no shadows, no borders.
+4. **Organic layout** — Avoid perfectly symmetrical layouts. Use slight left-alignment, varied font sizes, and natural spacing.
+5. **Sticker decorations** — Include at least one decorative element per page: tape strip, paper clip icon, stamp, sticky note, or hand-drawn underline. Use SVG or HTML/CSS, never emoji.
+6. **Ink color** — Text color should be ink-like: `#3D2B1F` (black-brown), `#2C3E50` (blue-black), never pure black `#000000`.
+7. **Accent sparingly** — Use stamp red `#C0392B` or ink blue `#2C3E50` for highlights only (underlines, small labels).
+8. **No page indicator** — Handwriting cards feel like loose paper. No "3/8" page numbers. Optionally use a small paper clip or folded corner as a visual cue instead.
+9. **No swipe-forward** — Each card is standalone. No "左滑" arrows. Let the content speak for itself.
+10. **Max ~80 characters per page** — Handwriting style needs generous whitespace. Keep text density low.
+</HARD-GATE>
+
+#### Font Setup
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=ZCOOL+XiaoWei&family=Liu+Jian+Mao+Cao&family=Long+Cang&display=swap" rel="stylesheet">
+```
+
+#### Page Layouts
+
+| Layout | Best For | Description |
+|--------|----------|-------------|
+| **Title + Body** | Reading notes, quotes | Large handwriting title, smaller body below, paper texture background |
+| **Sticky Note Stack** | Quick tips, reminders | 2-3 sticky-note style colored rectangles at slight rotations, text inside |
+| **Tape + Quote** | Key quotes, takeaways | Centered quote text with decorative tape strip across top or bottom |
+| **List on Grid** | Checklists, outlines | Items on grid paper with hand-drawn bullet markers (circles, dashes) |
+| **Stamp Card** | Key messages | Large single character or short phrase with stamp-style red accent circle |
+
+#### Example HTML (Title + Body on Kraft Paper)
+
+```html
+<div class="slide handwriting" style="background:#F5E6C8;">
+  <div class="paper-texture kraft"></div>
+  <div class="content" style="top:80px;left:60px;right:60px;bottom:80px;">
+    <div class="tape top-right"></div>
+    <h1 class="hw-title" style="font-family:'Ma Shan Zheng';font-size:72px;color:#3D2B1F;line-height:1.3;">
+      山中杂记
+    </h1>
+    <div class="hw-divider" style="width:80px;height:2px;background:#C0392B;margin:20px 0;"></div>
+    <p class="hw-body" style="font-family:'ZCOOL XiaoWei';font-size:36px;color:#3D2B1F;line-height:1.8;margin-top:20px;">
+      清晨六点，山谷里还笼着薄薄的雾气。<br>
+      鸟鸣声从四面八方传来，<br>
+      像是整座山都在轻轻呼吸。
+    </p>
+    <div class="stamp bottom-right">
+      <span style="border:2px solid #C0392B;border-radius:50%;padding:8px 6px;font-size:20px;color:#C0392B;font-family:'Ma Shan Zheng';">记</span>
+    </div>
+  </div>
+</div>
+```
+
+#### Decorative Elements CSS
+
+```css
+/* Tape strip */
+.tape {
+  position:absolute; width:120px; height:24px;
+  background:rgba(255,255,255,0.5); opacity:0.7;
+  transform:rotate(-3deg); border-radius:2px;
+}
+.tape.top-right { top:30px; right:40px; transform:rotate(8deg); }
+.tape.top-left { top:30px; left:40px; transform:rotate(-5deg); }
+
+/* Sticky note */
+.sticky-note {
+  padding:20px 24px; background:#FFF9C4; border-radius:2px;
+  box-shadow:2px 2px 8px rgba(0,0,0,0.06);
+  transform:rotate(-1deg); font-family:'ZCOOL KuaiLe'; font-size:28px;
+}
+
+/* Stamp circle */
+.stamp { display:inline-flex; align-items:center; justify-content:center; }
+.stamp-circle {
+  width:60px; height:60px; border-radius:50%;
+  border:2px solid #C0392B; display:flex;
+  align-items:center; justify-content:center;
+  font-size:24px; color:#C0392B; font-family:'Ma Shan Zheng';
+  transform:rotate(-12deg); opacity:0.85;
+}
+
+/* Hand-drawn underline */
+.hw-underline {
+  background:linear-gradient(180deg, transparent 60%, rgba(192,57,43,0.15) 60%);
+  display:inline;
+}
+
+/* Paper clip SVG */
+.paperclip {
+  position:absolute; width:24px; height:48px;
+  border:2px solid #999; border-radius:12px 12px 0 0;
+  border-bottom:none; transform:rotate(15deg);
+}
+```
+
+#### Output Rules
+
+- Single-size output (1080x1440 portrait) — handwriting cards are designed for vertical mobile viewing only
+- No landscape variant needed
+- Filename prefix: `handwriting_001.png`, etc.
 
 ---
 
